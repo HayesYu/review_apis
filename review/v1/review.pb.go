@@ -768,6 +768,7 @@ func (x *AppealReviewReply) GetAppealID() int64 {
 type AuditAppealRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	AppealID      int64                  `protobuf:"varint,1,opt,name=appealID,proto3" json:"appealID,omitempty"`
+	ReviewID      int64                  `protobuf:"varint,5,opt,name=reviewID,proto3" json:"reviewID,omitempty"`
 	Status        int32                  `protobuf:"varint,2,opt,name=status,proto3" json:"status,omitempty"`
 	OpUser        string                 `protobuf:"bytes,3,opt,name=opUser,proto3" json:"opUser,omitempty"`
 	OpRemarks     *string                `protobuf:"bytes,4,opt,name=opRemarks,proto3,oneof" json:"opRemarks,omitempty"`
@@ -812,6 +813,13 @@ func (x *AuditAppealRequest) GetAppealID() int64 {
 	return 0
 }
 
+func (x *AuditAppealRequest) GetReviewID() int64 {
+	if x != nil {
+		return x.ReviewID
+	}
+	return 0
+}
+
 func (x *AuditAppealRequest) GetStatus() int32 {
 	if x != nil {
 		return x.Status
@@ -836,7 +844,6 @@ func (x *AuditAppealRequest) GetOpRemarks() string {
 // 对申诉进行审核的返回值
 type AuditAppealReply struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	AppealID      int64                  `protobuf:"varint,1,opt,name=appealID,proto3" json:"appealID,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -871,17 +878,12 @@ func (*AuditAppealReply) Descriptor() ([]byte, []int) {
 	return file_api_review_v1_review_proto_rawDescGZIP(), []int{12}
 }
 
-func (x *AuditAppealReply) GetAppealID() int64 {
-	if x != nil {
-		return x.AppealID
-	}
-	return 0
-}
-
 // 用户评价列表的请求
 type ListReviewByUserIDRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	UserID        int64                  `protobuf:"varint,1,opt,name=userID,proto3" json:"userID,omitempty"`
+	Page          int32                  `protobuf:"varint,2,opt,name=page,proto3" json:"page,omitempty"`
+	Size          int32                  `protobuf:"varint,3,opt,name=size,proto3" json:"size,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -919,6 +921,20 @@ func (*ListReviewByUserIDRequest) Descriptor() ([]byte, []int) {
 func (x *ListReviewByUserIDRequest) GetUserID() int64 {
 	if x != nil {
 		return x.UserID
+	}
+	return 0
+}
+
+func (x *ListReviewByUserIDRequest) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *ListReviewByUserIDRequest) GetSize() int32 {
+	if x != nil {
+		return x.Size
 	}
 	return 0
 }
@@ -1036,18 +1052,20 @@ const file_api_review_v1_review_proto_rawDesc = "" +
 	"\apicInfo\x18\x05 \x01(\tR\apicInfo\x12\x1c\n" +
 	"\tvideoInfo\x18\x06 \x01(\tR\tvideoInfo\"/\n" +
 	"\x11AppealReviewReply\x12\x1a\n" +
-	"\bappealID\x18\x01 \x01(\x03R\bappealID\"\xac\x01\n" +
+	"\bappealID\x18\x01 \x01(\x03R\bappealID\"\xd1\x01\n" +
 	"\x12AuditAppealRequest\x12#\n" +
-	"\bappealID\x18\x01 \x01(\x03B\a\xfaB\x04\"\x02 \x00R\bappealID\x12\x1f\n" +
+	"\bappealID\x18\x01 \x01(\x03B\a\xfaB\x04\"\x02 \x00R\bappealID\x12#\n" +
+	"\breviewID\x18\x05 \x01(\x03B\a\xfaB\x04\"\x02 \x00R\breviewID\x12\x1f\n" +
 	"\x06status\x18\x02 \x01(\x05B\a\xfaB\x04\x1a\x02 \x00R\x06status\x12\x1f\n" +
 	"\x06opUser\x18\x03 \x01(\tB\a\xfaB\x04r\x02\x10\x02R\x06opUser\x12!\n" +
 	"\topRemarks\x18\x04 \x01(\tH\x00R\topRemarks\x88\x01\x01B\f\n" +
 	"\n" +
-	"_opRemarks\".\n" +
-	"\x10AuditAppealReply\x12\x1a\n" +
-	"\bappealID\x18\x01 \x01(\x03R\bappealID\"<\n" +
+	"_opRemarks\"\x12\n" +
+	"\x10AuditAppealReply\"v\n" +
 	"\x19ListReviewByUserIDRequest\x12\x1f\n" +
-	"\x06userID\x18\x01 \x01(\x03B\a\xfaB\x04\"\x02 \x00R\x06userID\"H\n" +
+	"\x06userID\x18\x01 \x01(\x03B\a\xfaB\x04\"\x02 \x00R\x06userID\x12\x1b\n" +
+	"\x04page\x18\x02 \x01(\x05B\a\xfaB\x04\x1a\x02 \x00R\x04page\x12\x1b\n" +
+	"\x04size\x18\x03 \x01(\x05B\a\xfaB\x04\x1a\x02 \x00R\x04size\"H\n" +
 	"\x17ListReviewByUserIDReply\x12-\n" +
 	"\x04list\x18\x01 \x03(\v2\x19.api.review.v1.ReviewInfoR\x04list2\xac\x06\n" +
 	"\x06Review\x12k\n" +

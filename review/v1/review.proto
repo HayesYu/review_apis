@@ -144,6 +144,7 @@ message AppealReviewReply{
 // 对申诉进行审核的请求
 message AuditAppealRequest{
 	int64 appealID = 1 [(validate.rules).int64 = {gt: 0}];
+	int64 reviewID = 5 [(validate.rules).int64 = {gt: 0}];
 	int32 status = 2 [(validate.rules).int32 = {gt: 0}];
 	string opUser = 3 [(validate.rules).string = {min_len: 2}];
 	optional string opRemarks = 4;
@@ -151,12 +152,13 @@ message AuditAppealRequest{
 
 // 对申诉进行审核的返回值
 message AuditAppealReply{
-	int64 appealID = 1;
 }
 
 // 用户评价列表的请求
 message ListReviewByUserIDRequest{
 	int64 userID = 1 [(validate.rules).int64 = {gt: 0}];
+	int32 page = 2 [(validate.rules).int32 = {gt: 0}];
+	int32 size = 3 [(validate.rules).int32 = {gt: 0}];
 }
 
 // 用户评价列表的返回值
