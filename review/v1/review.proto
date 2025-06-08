@@ -56,7 +56,19 @@ service Review {
 			get: "/v1/{userID}/reviews",
 		};
 	}
+	// 根据商家ID查看所有评价（分页）
+	rpc ListReviewByStoreID (ListReviewByStoreIDRequest) returns (ListReviewByStoreIDReply) {}
 }
+
+message ListReviewByStoreIDRequest{
+	int64 storeID = 1 [(validate.rules).int64 = {gt: 0}];
+	int32 page =2 [(validate.rules).int32 = {gt: 0}];
+	int32 size=3 [(validate.rules).int32 = {gt: 0}];
+}
+message ListReviewByStoreIDReply{
+	repeated ReviewInfo list=1;
+}
+
 
 message CreateReviewRequest {
 	int64 userID =1 [(validate.rules).int64 = {gt:0}];
@@ -68,6 +80,7 @@ message CreateReviewRequest {
 	string picInfo =7;
 	string videoInfo =8;
 	bool anonymous =9;
+	int64 storeID = 10 [(validate.rules).int64 = {gt: 0}];
 }
 message CreateReviewReply {
 	int64 reviewID = 1;
